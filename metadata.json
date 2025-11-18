@@ -1,0 +1,5 @@
+{
+  "name": "MCP Chatbot Studio",
+  "description": "A React-based chatbot interface allowing users to define, manage, and simulate Model Context Protocol (MCP) tools with dynamic execution and transparent tool-use visualization.",
+  "requestFramePermissions": []
+}
