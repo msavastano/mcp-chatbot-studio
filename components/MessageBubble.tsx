@@ -63,13 +63,12 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
 
         {/* Text Content */}
         {message.content && (
-           <div className={`rounded-2xl px-5 py-3 max-w-2xl shadow-sm leading-relaxed ${
+           <div className={`rounded-2xl px-5 py-3 max-w-2xl shadow-sm leading-relaxed prose prose-invert prose-sm max-w-none ${
              isUser 
                ? 'bg-blue-600 text-white rounded-br-none' 
                : 'bg-gray-800 text-gray-100 rounded-bl-none border border-gray-700'
            }`}>
              <ReactMarkdown 
-               className="prose prose-invert prose-sm max-w-none"
                components={{
                  code({node, className, children, ...props}) {
                    const match = /language-(\w+)/.exec(className || '')

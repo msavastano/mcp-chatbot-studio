@@ -1,4 +1,4 @@
-import { GoogleGenAI, Chat, FunctionDeclaration, Type } from "@google/genai";
+import { GoogleGenAI, Chat, FunctionDeclaration } from "@google/genai";
 import { MCPTool, ChatMessage, MessageRole } from "../types";
 
 // We'll keep a reference to the chat instance to maintain history automatically
@@ -24,12 +24,13 @@ export const convertToolsToDeclarations = (tools: MCPTool[]): FunctionDeclaratio
         const parsedParams = JSON.parse(t.parameters);
         // Ensure type enums are correct if the user pasted standard JSON schema
         // The Gemini SDK expects Type.OBJECT, etc.
-        // We will trust the user parsed JSON is structurally compatible for now
-        return {
+        // We cast to any to avoid strict strict Schema type checks against the parsed JSON
+        const declaration: FunctionDeclaration = {
           name: t.name,
           description: t.description,
-          parameters: parsedParams
+          parameters: parsedParams as any
         };
+        return declaration;
       } catch (e) {
         console.error(`Failed to parse parameters for tool ${t.name}`, e);
         return null;
@@ -43,7 +44,7 @@ export const sendMessageToGemini = async (
   newMessage: string,
   activeTools: MCPTool[]
 ): Promise<{
-  response: any; // GenerateContentResponse
+  response: any; 
   chat: Chat;
 }> => {
   const client = createGeminiClient();
